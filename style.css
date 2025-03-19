@@ -1,0 +1,24 @@
+.easy {
+    background-color: lightgreen;
+    color: green; border: 2px solid;
+}
+
+.medium {
+    background-color: lightsalmon;
+    color: orange; border: 2px solid;
+}
+
+
+.hard {
+    background-color: red;
+    color: darkred; border: 2px solid;
+}
+
+body {
+    background-color: lightblue;
+    color: black;
+
+}
+h1 {
+    color: royalblue;
+}
