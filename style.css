@@ -5,7 +5,7 @@
 
 .medium {
     background-color: lightsalmon;
-    color: orange; border: 2px solid;
+    color: black; border: 2px solid;
 }
 
 
@@ -21,4 +21,21 @@ body {
 }
 h1 {
     color: royalblue;
+    transition-duration: 2s;
+}
+h1:hover {
+    transform: scale(1.2);
+    transition-duration: 2s;
+}
+
+.box {
+    color: red;
+    border-radius: 10px;
+    transition-duration: 2s;
+}
+.box:hover {
+    color: red;
+    border-radius: 10px;
+    transition-duration: 2s;
+    transform: scale(1.2);
 }

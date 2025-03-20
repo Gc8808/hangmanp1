@@ -16,7 +16,9 @@ function startGame(level) {
 wrongGuesses = 0
 guessedLetters = []
 selectedWord = getRandomWord(level)
+displayedWord = '_'.repeat(selectedWord.length)
 updateDifficultyDisplay(level)
+updateUI()
 
 //Show Game area and difficulty display hide selection button
 document.getElementById('gameArea').classList.remove('d-none')
@@ -25,6 +27,8 @@ document.getElementById('gameArea').classList.add('d-block')
 document.getElementById('difficultyBox').classList.remove('d-none')
 document.getElementById('difficultyBox').classList.add('d-block')
 document.getElementById('difficultySelection').classList.add('d-none')
+
+document.getElementById('letterInput').focus() //Type without clicking
 }
 
 function getRandomWord(level){
@@ -52,4 +56,33 @@ document.getElementById('difficultyBox').innerHTML ='easy'
     difficultyBox.classList.add('hard')
     document.getElementById('difficultyBox').innerHTML ='hard'
 }
+}
+function updateUI(){
+    document.getElementById('wordDisplay').textContent = displayedWord.split('').join('  ') //Show word with spaces
+    
+}
+
+function guessLetter(){
+let inputField = document.getElementById('letterInput') //Get input field
+let guessedLetter = inputField.value.toLowerCase() //Converting to lowercase
+// check for valid input
+if (!guessedLetter.match(/^[a-z]$/)) {
+    alert('Please enter a valid letter (a-z)')
+    inputField.value = ''
+    return
+}
+if (guessedLetters.includes(guessLetter)) {
+    alert('Letter already Guessed')
+    inputField.value = ''
+    return
+}
+//store guessed letter
+guessedLetters.push(guessedLetter)
+if (selectedWord.includes(guessedLetter)){
+    updateCorrectedGuess(guessedLetter)
+} else {
+    updateWrongGuess(guessedLetter)
+}
+inputField.value = ''
+document.getElementById('letterInput').focus()
 }
