@@ -86,3 +86,30 @@ if (selectedWord.includes(guessedLetter)){
 inputField.value = ''
 document.getElementById('letterInput').focus()
 }
+
+function updateWrongGuess(guessedLetter) {
+    wrongGuesses++
+    document.getElementById('wrongLetters').textContent += `${guessedLetter}`
+   // document.getElementById('shamrock').src= `imgs/shamrock${6-wrongGuesses}.jpg`
+
+    if (wrongGuesses === maxMistakes) {
+         endGame(false)
+    }
+}
+function updateCorrectedGuess(guessedLetter) {
+let newDisplayedWord = ''
+
+for(let i=0;i < selectedWord.length; i++) {
+    if (selectedWord[i] === guessedLetter) {
+        newDisplayedWord += guessedLetter
+    } else {
+        newDisplayedWord += displayedWord[i]
+
+    }
+}
+displayedWord = newDisplayedWord
+updateUI()
+ if (!displayedWord.includes('_')) {
+    endGame(true)
+ }
+}
