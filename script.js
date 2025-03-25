@@ -1,132 +1,190 @@
-//word list
-const wordList = [ 'Gold', 'luck', 'clover', 'rain', 'rainbow', 'sunlight', 'shamrock', ]
-   
+// Word list
+const wordList = ['gold', 'luck', 'clover', 'rain', 'rainbow', 'sunlight', 'shamrock'];
 
+// Declare variables
+let selectedWord = '';
+let displayedWord = '';
+let wrongGuesses = 0;
+let guessedLetters = [];
+const maxMistakes = 6;
 
-//declare varibles
-let selectedWord = ''
-let displayedWord = ''
-let wrongGuesses = 0
-let guessedLetters = []
-const maxMistakes = 6
-
-//start game runs everything
+// Start game function
 function startGame(level) {
-//reset game
-wrongGuesses = 0
-guessedLetters = []
-selectedWord = getRandomWord(level)
-displayedWord = '_'.repeat(selectedWord.length)
-updateDifficultyDisplay(level)
-updateUI()
+    // Reset game
+    wrongGuesses = 0;
+    guessedLetters = [];
+    selectedWord = getRandomWord(level);
+    displayedWord = '_'.repeat(selectedWord.length);
+    updateDifficultyDisplay(level);
+    updateUI();
 
-//Show Game area and difficulty display hide selection button
-document.getElementById('gameArea').classList.remove('d-none')
-document.getElementById('gameArea').classList.add('d-block')
+    // Show game area and difficulty display, hide selection button
+    document.getElementById('gameArea').classList.remove('d-none');
+    document.getElementById('gameArea').classList.add('d-block');
 
-document.getElementById('difficultyBox').classList.remove('d-none')
-document.getElementById('difficultyBox').classList.add('d-block')
-document.getElementById('difficultySelection').classList.add('d-none')
+    document.getElementById('difficultyBox').classList.remove('d-none');
+    document.getElementById('difficultyBox').classList.add('d-block');
+    document.getElementById('difficultySelection').classList.add('d-none');
 
-document.getElementById('letterInput').focus() //Type without clicking
+    document.getElementById('letterInput').focus(); // Type without clicking
 }
 
-function getRandomWord(level){
-let filteredWords = wordList.filter (word => {
-    if (level=== 'easy') return word.length <= 4
-    if (level=== 'medium') return word.length >= 5 && word.length <=7
-    if (level=== 'hard') return word.length >= 8
-}
-)
+// Get a random word based on difficulty level
+function getRandomWord(level) {
+    let filteredWords = wordList.filter(word => {
+        if (level === 'easy') return word.length <= 4;
+        if (level === 'medium') return word.length >= 5 && word.length <= 7;
+        if (level === 'hard') return word.length >= 8;
+    });
 
-return filteredWords[Math.floor(Math.random()*filteredWords.length)]
-
+    return filteredWords[Math.floor(Math.random() * filteredWords.length)];
 }
-//update difficulty display
+
+// Update difficulty display
 function updateDifficultyDisplay(level) {
-let difficultyBox = document.getElementById('difficultyBox')
-difficultyBox.classList.remove('easy', 'medium', 'hard')
-if(level=== 'easy') {
-difficultyBox.classList.add('easy')
-document.getElementById('difficultyBox').innerHTML ='easy'
-}else if (level=== 'medium') {
-    difficultyBox.classList.add('medium')
-    document.getElementById('difficultyBox').innerHTML ='medium'
-} else if (level=== 'hard') {
-    difficultyBox.classList.add('hard')
-    document.getElementById('difficultyBox').innerHTML ='hard'
-}
-}
-function updateUI(){
-    document.getElementById('wordDisplay').textContent = displayedWord.split('').join('  ') //Show word with spaces
+    let difficultyBox = document.getElementById('difficultyBox');
+    difficultyBox.classList.remove('easy', 'medium', 'hard');
     
+    difficultyBox.textContent = level;
+    difficultyBox.classList.add(level);
 }
 
-function guessLetter(){
-let inputField = document.getElementById('letterInput') //Get input field
-let guessedLetter = inputField.value.toLowerCase() //Converting to lowercase
-// check for valid input
-if (!guessedLetter.match(/^[a-z]$/)) {
-    alert('Please enter a valid letter (a-z)')
-    inputField.value = ''
-    return
-}
-if (guessedLetters.includes(guessedLetter)) {
-    alert('Letter already Guessed')
-    inputField.value = ''
-    return
-}
-//store guessed letter
-guessedLetters.push(guessedLetter)
-if (selectedWord.includes(guessedLetter)){
-    updateCorrectedGuess(guessedLetter)
-} else {
-    updateWrongGuess(guessedLetter)
-}
-inputField.value = ''
-document.getElementById('letterInput').focus()
+// Update UI with the displayed word
+function updateUI() {
+    document.getElementById('wordDisplay').textContent = displayedWord.split('').join(' ');
 }
 
+// Handle letter guesses
+function guessLetter() {
+    let inputField = document.getElementById('letterInput'); // Get input field
+    let guessedLetter = inputField.value.toLowerCase(); // Convert to lowercase
+
+    // Check for valid input
+    if (!guessedLetter.match(/^[a-z]$/)) {
+        alert('Please enter a valid letter (a-z)');
+        inputField.value = '';
+        return;
+    }
+
+    if (guessedLetters.includes(guessedLetter)) {
+        alert('Letter already guessed');
+        inputField.value = '';
+        return;
+    }
+
+    // Store guessed letter
+    guessedLetters.push(guessedLetter);
+    if (selectedWord.includes(guessedLetter)) {
+        updateCorrectedGuess(guessedLetter);
+    } else {
+        updateWrongGuess(guessedLetter);
+    }
+    inputField.value = '';
+    inputField.focus();
+}
+
+// Handle wrong guesses
 function updateWrongGuess(guessedLetter) {
-    wrongGuesses++
-    document.getElementById('wrongLetters').textContent += `${guessedLetter}`
-   // document.getElementById('shamrock').src= `imgs/shamrock${6-wrongGuesses}.jpg`
+    wrongGuesses++;
+    document.getElementById('wrongLetters').textContent += `${guessedLetter} `;
 
     if (wrongGuesses === maxMistakes) {
-         endGame(false)
+        endGame(false);
     }
 }
+
+// Handle correct guesses
 function updateCorrectedGuess(guessedLetter) {
-let newDisplayedWord = ''
+    let newDisplayedWord = '';
 
-for(let i=0;i < selectedWord.length; i++) {
-    if (selectedWord[i] === guessedLetter) {
-        newDisplayedWord += guessedLetter
-    } else {
-        newDisplayedWord += displayedWord[i]
+    for (let i = 0; i < selectedWord.length; i++) {
+        if (selectedWord[i] === guessedLetter) {
+            newDisplayedWord += guessedLetter;
+        } else {
+            newDisplayedWord += displayedWord[i];
+        }
+    }
 
+    displayedWord = newDisplayedWord;
+    updateUI();
+
+    if (!displayedWord.includes('_')) {
+        endGame(true);
     }
 }
-displayedWord = newDisplayedWord
-updateUI()
- if (!displayedWord.includes('_')) {
-    endGame(true)
- }
+
+// End game function
+function endGame(won) {
+    let message = won
+        ? '🎉 Congratulations! You guessed the word! 🍀'
+        : `❌ Game Over! The word was "${selectedWord}".`;
+
+    let endMessage = document.getElementById('end');
+    endMessage.textContent = message; // Set the text content of the element
+    endMessage.classList.remove('d-none'); // Show the message
+    endMessage.classList.add('d-block'); // Ensure it's displayed properly
+
+    // Hide the game area
+    document.getElementById('gameArea').classList.add('d-none');
+
+    // Hide the difficulty box
+    document.getElementById('difficultyBox').classList.add('d-none'); // Hide the difficulty box
+
+    // Show the difficulty selection buttons again
+    document.getElementById('difficultySelection').classList.remove('d-none');
+    document.getElementById('difficultySelection').classList.add('d-block');
+
+    // Optional: Add a 3-second delay before resetting the game state
+    setTimeout(() => {
+        // Reset game variables
+        wrongGuesses = 0;
+        guessedLetters = [];
+        selectedWord = '';
+        displayedWord = '';
+
+        // Hide the end message
+        endMessage.classList.add('d-none');
+
+        // Show the difficulty selection buttons
+        document.getElementById('difficultySelection').classList.remove('d-none');
+        document.getElementById('difficultySelection').classList.add('d-block');
+    }, 3000); // 3-second delay before showing difficulty selection
 }
 
+// Restart Game - Reloads the page to reset everything
+function restartGame(end) {
+    let message = end
+    ? ' Restarting...'
+    : `Restarting...".`;
 
-function endGame(won){
-    let message = won
-    ? '🎉 Congratulations! You guessed the word! 🍀'
-    : `❌ Game Over! The word was "${selectedWord}".`
-  
-  setTimeout(() => alert(message), 100) // Display alert after short delay
-  let endMessage = document.getElementById('end')
-  endMessage.classList.remove('d-none')
-  
-  }
-  
-  // /Restart Game - Reloads the page to reset everything
-  function restartGame(){
-  document.getElementById('gameArea').classList.remove('d-none')
-  }
+let endMessage = document.getElementById('end');
+endMessage.textContent = message; // Set the text content of the element
+endMessage.classList.remove('d-none'); // Show the message
+endMessage.classList.add('d-block'); // Ensure it's displayed properly
+
+// Hide the game area
+document.getElementById('gameArea').classList.add('d-none');
+
+// Hide the difficulty box
+document.getElementById('difficultyBox').classList.add('d-none'); // Hide the difficulty box
+
+// Show the difficulty selection buttons again
+document.getElementById('difficultySelection').classList.remove('d-none');
+document.getElementById('difficultySelection').classList.add('d-block');
+
+// Optional: Add a 3-second delay before resetting the game state
+setTimeout(() => {
+    // Reset game variables
+    wrongGuesses = 0;
+    guessedLetters = [];
+    selectedWord = '';
+    displayedWord = '';
+
+    // Hide the end message
+    endMessage.classList.add('d-none');
+
+    // Show the difficulty selection buttons
+    document.getElementById('difficultySelection').classList.remove('d-none');
+    document.getElementById('difficultySelection').classList.add('d-block');
+}, 3000); // 3-second delay before showing difficulty selection
+}
