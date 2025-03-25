@@ -71,7 +71,7 @@ if (!guessedLetter.match(/^[a-z]$/)) {
     inputField.value = ''
     return
 }
-if (guessedLetters.includes(guessLetter)) {
+if (guessedLetters.includes(guessedLetter)) {
     alert('Letter already Guessed')
     inputField.value = ''
     return
@@ -113,3 +113,20 @@ updateUI()
     endGame(true)
  }
 }
+
+
+function endGame(won){
+    let message = won
+    ? '🎉 Congratulations! You guessed the word! 🍀'
+    : `❌ Game Over! The word was "${selectedWord}".`
+  
+  setTimeout(() => alert(message), 100) // Display alert after short delay
+  let endMessage = document.getElementById('end')
+  endMessage.classList.remove('d-none')
+  
+  }
+  
+  // /Restart Game - Reloads the page to reset everything
+  function restartGame(){
+  document.getElementById('gameArea').classList.remove('d-none')
+  }
