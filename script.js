@@ -8,6 +8,8 @@ let wrongGuesses = 0;
 let guessedLetters = [];
 const maxMistakes = 6;
 
+
+
 // Start game function
 function startGame(level) {
     // Reset game
@@ -151,7 +153,7 @@ function endGame(won) {
     }, 3000); // 3-second delay before showing difficulty selection
 }
 
-// Restart Game - Reloads the page to reset everything
+
 function restartGame(end) {
     let message = end
     ? ' Restarting...'
@@ -188,3 +190,31 @@ setTimeout(() => {
     document.getElementById('difficultySelection').classList.add('d-block');
 }, 3000); // 3-second delay before showing difficulty selection
 }
+
+// Add event listener for the Enter key
+document.getElementById('letterInput').addEventListener('keydown', function (event) {
+    if (event.key === 'Enter') {
+        guessLetter();
+    }
+});
+
+function startGameAlt(level) {
+    // Reset game
+    wrongGuesses = 0;
+    guessedLetters = [];
+    selectedWord = prompt("Enter your desired word");
+    displayedWord = '_'.repeat(selectedWord.length);
+    updateDifficultyDisplay(level);
+    updateUI();
+
+    // Show game area and difficulty display, hide selection button
+    document.getElementById('gameArea').classList.remove('d-none');
+    document.getElementById('gameArea').classList.add('d-block');
+
+    document.getElementById('difficultyBox').classList.remove('d-none');
+    document.getElementById('difficultyBox').classList.add('d-block');
+    document.getElementById('difficultySelection').classList.add('d-none');
+
+    document.getElementById('letterInput').focus(); // Type without clicking
+}
+
