@@ -91,7 +91,7 @@ function updateWrongGuess(guessedLetter) {
 
     document.getElementById('wrongLetters').textContent += `${guessedLetter} `;
     document.getElementById('incorrectSound').play();
-
+    document.getElementById('hangmanImage').src = `start(${wrongGuesses}).png`;
     if (wrongGuesses === maxMistakes) {
         endGame(false);
     }
@@ -148,7 +148,7 @@ function endGame(won) {
         guessedLetters = [];
         selectedWord = '';
         displayedWord = '';
-
+        document.getElementById('hangmanImage').src = 'start.png';
         // Hide the end message
         endMessage.classList.add('d-none');
 
