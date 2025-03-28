@@ -7,7 +7,7 @@ let displayedWord = '';
 let wrongGuesses = 0;
 let guessedLetters = [];
 const maxMistakes = 6;
-
+const audio = document.getElementById("ding-small-bell-sfx-233008.mp3");
 
 
 // Start game function
@@ -27,7 +27,6 @@ function startGame(level) {
     document.getElementById('difficultyBox').classList.remove('d-none');
     document.getElementById('difficultyBox').classList.add('d-block');
     document.getElementById('difficultySelection').classList.add('d-none');
-
     document.getElementById('letterInput').focus(); // Type without clicking
 }
 
@@ -88,7 +87,10 @@ function guessLetter() {
 // Handle wrong guesses
 function updateWrongGuess(guessedLetter) {
     wrongGuesses++;
+    
+
     document.getElementById('wrongLetters').textContent += `${guessedLetter} `;
+    document.getElementById('incorrectSound').play();
 
     if (wrongGuesses === maxMistakes) {
         endGame(false);
@@ -110,8 +112,11 @@ function updateCorrectedGuess(guessedLetter) {
     displayedWord = newDisplayedWord;
     updateUI();
 
+   document.getElementById('correctSound').play();
+
     if (!displayedWord.includes('_')) {
         endGame(true);
+     
     }
 }
 
@@ -120,12 +125,12 @@ function endGame(won) {
     let message = won
         ? '🎉 Congratulations! You guessed the word! 🍀'
         : `❌ Game Over! The word was "${selectedWord}".`;
-
+       
     let endMessage = document.getElementById('end');
     endMessage.textContent = message; // Set the text content of the element
     endMessage.classList.remove('d-none'); // Show the message
     endMessage.classList.add('d-block'); // Ensure it's displayed properly
-
+    
     // Hide the game area
     document.getElementById('gameArea').classList.add('d-none');
 
@@ -157,7 +162,7 @@ function endGame(won) {
 function restartGame(end) {
     let message = end
     ? ' Restarting...'
-    : `Restarting...".`;
+    : `Restarting...`;
 
 let endMessage = document.getElementById('end');
 endMessage.textContent = message; // Set the text content of the element
@@ -217,4 +222,5 @@ function startGameAlt(level) {
 
     document.getElementById('letterInput').focus(); // Type without clicking
 }
+
 
