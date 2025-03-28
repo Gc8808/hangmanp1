@@ -207,7 +207,7 @@ function startGameAlt(level) {
     // Reset game
     wrongGuesses = 0;
     guessedLetters = [];
-    selectedWord = prompt("Enter your desired word");
+    selectedWord = prompt("Enter your desired word").toLowerCase();
     displayedWord = '_'.repeat(selectedWord.length);
     updateDifficultyDisplay(level);
     updateUI();
