@@ -20,6 +20,7 @@
     </head>
 
     <body>
+        <div class="container-fluid">
         <audio id="correctSound" src="ding-small-bell-sfx-233008.mp3"></audio>
         <audio id="incorrectSound" src="mixkit-wrong-long-buzzer-954.wav"></audio>
         <main class="container text-center">
@@ -30,7 +31,7 @@
                 <button class="btn btn-success difficulty-btn" onclick="startGame('easy')">Easy</button>
                 <button class="btn btn-warning difficulty-btn" onclick="startGame('medium')">Medium</button>
                 <button class="btn btn-danger difficulty-btn" onclick="startGame('hard')">Hard</button>
-                <button class="btn btn-dark difficulty-btn" onclick="startGameAlt() ">Choose your own word</button>
+                <button class="rainbow" onclick="startGameAlt() ">Choose your own word</button>
                 <div class="circle d-none" id="circleDiv"></div>
             </div>
 
@@ -72,6 +73,7 @@
               <button id="restartBtn" class="btn btn-danger" onclick="restartGame()">Restart Game</button>
               <br>
           <img src="start.png" id="hangmanImage">
+        </div>
         </main>
         <footer>
             <!-- place footer here -->

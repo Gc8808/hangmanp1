@@ -149,6 +149,7 @@ function endGame(won) {
         selectedWord = '';
         displayedWord = '';
         document.getElementById('hangmanImage').src = 'start.png';
+        document.getElementById('wrongLetters').innerText = ('Wrong Guesses:')
         // Hide the end message
         endMessage.classList.add('d-none');
 
@@ -186,7 +187,9 @@ setTimeout(() => {
     guessedLetters = [];
     selectedWord = '';
     displayedWord = '';
-
+    document.getElementById('wrongLetters').innerText = ('Wrong Guesses:')
+    document.getElementById('hangmanImage').src = 'start.png';
+    
     // Hide the end message
     endMessage.classList.add('d-none');
 
