@@ -21,20 +21,23 @@ body {
 
 }
 h1 {
+    padding-top: 100px;
     color: royalblue;
     transition-duration: 2s;
+    font-size: 80px
     
 }
 h1:hover {
     transform: scale(1.2);
     transition-duration: 2s;
+  
 }
 
 .box {
     color: red;
     border-radius: 10px;
     transition-duration: 2s;
-    padding-top: 100px;
+    padding-top: 10px;
     font-size: 20px
    
 }
